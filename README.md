@@ -1,0 +1,12 @@
+# Cine-stream
+ - Create-react-app
+ - Configured Tailwind CSS
+ - Header
+ - Router of app
+ - Login
+ - Sign up
+ - Form validation
+ - useRef hook
+ - FireBase Setup
+ - Deploying our app to production
+ - Create sign up  User Account
