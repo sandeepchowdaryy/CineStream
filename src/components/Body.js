@@ -12,8 +12,10 @@ function Body() {
     {
       path: "/browse",
       element: <Browse />,
-    }
+    },
   ]);
+
+  
 
   return <RouterProvider router={appRouter} />;
 }

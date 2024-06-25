@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="  footer mt-10 bg-gray-200 ">
+    <div className="footer mt-10 bg-gray-200 ">
       <div className="flex-col flex lg:flex-row items-center gap-10 py-5 justify-center">
         <h1 className="text lg:text-2xl font-bold font-Poppins text-gray-700">
           For better experience,download the app now

@@ -1,46 +1,83 @@
 import React, { useRef, useState } from "react";
 import Header from "./Header";
 import { auth } from "../utils/firebase";
-import {createUserWithEmailAndPassword,signInWithEmailAndPassword } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 import { checkvalidation } from "../utils/validate";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
+import { user_logo } from "../utils/constants";
 
 function Login() {
   const [issignup, setissignup] = useState(true);
   const [validmessage, setvalidmessage] = useState(null);
   const email = useRef(null);
   const password = useRef(null);
+  const name = useRef(null);
+  const dispatch = useDispatch(); 
 
   const checkvalid = () => {
-    const message = checkvalidation(email.current.value, password.current.value);
+    const message = checkvalidation(
+      email.current.value,
+      password.current.value
+    );
     setvalidmessage(message);
 
     if (message) return;
 
-    if (! issignup ) {
-      createUserWithEmailAndPassword(auth, email.current.value, password.current.value)
+    if (!issignup) {
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
         .then((userCredential) => {
-          // Signed up 
+          // Signed up
           const user = userCredential.user;
+          updateProfile(user, {
+            displayName: name.current.value,
+            photoURL:user_logo
+          })
+            .then(() => {
+              const { uid, email, displayName, photoURL } = auth.currentUser;
+              dispatch(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                  photoURL: photoURL,
+                })
+              );  
+            })
+            .catch((error) => {
+              validmessage(error.message); 
+            });
           console.log(user);
           // ...
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          setvalidmessage(errorCode + " "  + errorMessage);
+          setvalidmessage(errorCode + " " + errorMessage);
         });
     } else {
-      signInWithEmailAndPassword(auth,email.current.value, password.current.value)
-      .then((userCredential) => {
-        // Signed in 
-        const user = userCredential.user;
-        console.log(user);
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        setvalidmessage(errorCode + " "  + errorMessage);
-      });
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          // Signed in
+          const user = userCredential.user;
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setvalidmessage(errorCode + " " + errorMessage);
+        });
     }
   };
 
@@ -56,7 +93,7 @@ function Login() {
 
       <div className="">
         <img
-          className="absolute  opacity-100 max-h-[60rem] w-[100%] object-cover "
+          className="absolute opacity-100 max-h-[64rem] w-[100%] object-cover "
           alt="body-logo"
           src="https://assets.nflxext.com/ffe/siteui/vlv3/cacfadb7-c017-4318-85e4-7f46da1cae88/e43aa8b1-ea06-46a5-abe3-df13243e718d/IN-en-20240603-popsignuptwoweeks-perspective_alpha_website_large.jpg"
         />
@@ -70,6 +107,7 @@ function Login() {
         </h1>
         {!issignup && (
           <input
+            ref={name}
             type="text"
             className="p-3 bg-gray-900 border border-solid  rounded-sm text-sm"
             placeholder="Full name"
@@ -125,7 +163,6 @@ function Login() {
           </span>
         </p>
       </form>
-    
     </div>
   );
 }
