@@ -7,13 +7,12 @@ import { addUser, removeUser } from "../utils/userSlice";
 import { netflix_logo } from "../utils/constants";
 
 function Header() {
- const navigate = useNavigate();
- const dispatch = useDispatch();
- const user = useSelector((store)=> store.user);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const user = useSelector((store) => store.user);
   const handlesignout = () => {
     signOut(auth)
-      .then(() => { 
-      })
+      .then(() => {})
       .catch((error) => {
         // An error happened.
         navigate("/error");
@@ -21,8 +20,8 @@ function Header() {
   };
 
   useEffect(() => {
-   const unsubscribe =  onAuthStateChanged(auth, (user) => {
-      if (user) {  
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(
           addUser({
@@ -43,24 +42,21 @@ function Header() {
   }, []);
 
   return (
-    <div className="flex justify-between bg-gradient-to-b from-black">
-      <div className="relative w-screen  px-20 py-2 z-10 ">
-        <img
-          alt="logo"
-          className="w-40"
-          src={netflix_logo}
-        />
+    <div className=" w-screen px-8  flex justify-between bg-black">
+      <div className=" py-2 z-10 ">
+        <img alt="logo" className="w-40" src={netflix_logo} />
       </div>
-     {user && <div className="p-4 flex">
-        <img
-          className="w-12 h -12 "
-          alt="usericon"
-          src={user?.photoURL}
-        />
-        <button onClick={handlesignout} className="font-bold text-white (condition) {
-          
-        }  p-1">(Signout)</button>
-      </div>}
+      {user && (
+        <div className=" p-4 flex">
+          <img className="w-12 h -12 " alt="usericon" src={user?.photoURL} />
+          <button
+            onClick={handlesignout}
+            className="font-bold text-white  p-1"
+          >
+            (Signout)
+          </button>
+        </div>
+      )}
     </div>
   );
 }

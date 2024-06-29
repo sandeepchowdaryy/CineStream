@@ -55,7 +55,6 @@ function Login() {
             .catch((error) => {
               validmessage(error.message); 
             });
-          console.log(user);
           // ...
         })
         .catch((error) => {
