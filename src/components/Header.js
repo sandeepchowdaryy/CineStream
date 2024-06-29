@@ -42,18 +42,19 @@ function Header() {
   }, []);
 
   return (
-    <div className=" w-screen px-8  flex justify-between bg-black">
+    <div className=" -mb-5 absolute z-10 w-screen px-8  flex justify-between bg-gradient-to-b from-black">
       <div className=" py-2 z-10 ">
         <img alt="logo" className="w-40" src={netflix_logo} />
       </div>
       {user && (
-        <div className=" p-4 flex">
+        <div className=" p-5 flex gap-2">
           <img className="w-12 h -12 " alt="usericon" src={user?.photoURL} />
           <button
+            
             onClick={handlesignout}
-            className="font-bold text-white  p-1"
+            className="font-bold bg-red-600 px-4 rounded-lg text-white "
           >
-            (Signout)
+            Logout
           </button>
         </div>
       )}
