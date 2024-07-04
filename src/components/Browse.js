@@ -7,8 +7,11 @@ import usePopularMovies from "../hooks/usePopularMovies";
 import useTopRatedMovies from "../hooks/useTopRatedMovies";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
 import useTrendingMovies from "../hooks/useTrendingMovies";
+import { Search } from "./Search";
+import { useSelector } from "react-redux";
 
 function Browse() {
+  const showsearch = useSelector((store) => store.search.showsearch);
   useNowPlayingMovies();
   usePopularMovies();
   useTopRatedMovies();
@@ -17,8 +20,14 @@ function Browse() {
   return (
     <div>
       <Header />
-      <MainContainer />
-      <SecondaryContainer/>
+      {showsearch ? (
+        <Search />
+      ) : (
+        <>
+          <MainContainer />
+          <SecondaryContainer />
+        </>
+      )}
     </div>
   );
 }
