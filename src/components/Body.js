@@ -1,23 +1,44 @@
 import React from "react";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
+import appStore from "../utils/appStore";
 import Login from "./Login";
-import { createBrowserRouter } from "react-router-dom";
 import Browse from "./Browse";
-import { RouterProvider } from "react-router-dom";
-function Body() {
-  const appRouter = createBrowserRouter([
-    {
-      path: "/",
-      element: <Login />,
-    },
-    {
-      path: "/browse",
-      element: <Browse />,
-    },
-  ]);
+import { MovieDetails } from "./MovieDetails";
+import Layout from "./Layout";
+import { Search } from "./Search";
 
-  
+const appRouter = createBrowserRouter([
+  {
+    path: "/",
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Login />,
+      },
+      {
+        path: "browse",
+        element: <Browse />,
+      },
+      {
+        path:"search",
+        element:<Search/>
+      },
+      {
+        path: "movie/:movieId",
+        element: <MovieDetails />,
+      },
+    ],
+  },
+]);
 
-  return <RouterProvider router={appRouter} />;
+function App() {
+  return (
+    <Provider store={appStore}>
+      <RouterProvider router={appRouter} />
+    </Provider>
+  );
 }
 
-export default Body;
+export default App;

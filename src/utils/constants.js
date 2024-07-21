@@ -10,5 +10,5 @@ export const API_Options =  {
   };
 
 export const Movie_IMG = "https://image.tmdb.org/t/p/w500";
-
+export const Movie_IMGBig = "https://image.tmdb.org/t/p/original/"
 export const OpenAI_Key = "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"; 

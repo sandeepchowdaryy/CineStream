@@ -19,7 +19,7 @@ function Browse() {
   useTrendingMovies();
   return (
     <div>
-      <Header />
+      
       {showsearch ? (
         <Search />
       ) : (

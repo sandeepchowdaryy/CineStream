@@ -1,17 +1,20 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import React, { useEffect } from "react";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { netflix_logo } from "../utils/constants";
 import { toggleSearchBtnEvent } from "../utils/searchSlice";
+import { IoSearch } from "react-icons/io5";
+import { FaHome } from "react-icons/fa";
+import { FaPowerOff } from "react-icons/fa";
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
   const search = useSelector((store) => store.search.showsearch);
+
   const handlesignout = () => {
     signOut(auth)
       .then(() => {})
@@ -43,29 +46,44 @@ function Header() {
     return () => unsubscribe();
   }, []);
 
-  const toogleSearchBtn = () => {
-    dispatch(toggleSearchBtnEvent());
-  };
+  // const toogleSearchBtn = () => {
+  //   dispatch(toggleSearchBtnEvent());
+  // };
 
   return (
-    <div className=" -mb-5 absolute z-10 w-screen pr-3  flex justify-between bg-black bg-opacity-70">
-      <div className="pl-8 pt-2 z-10 ">
-        <img alt="logo" className="w-32" src={netflix_logo} />
+    <div className=" -mb-5  fixed z-50 w-screen pr-3  flex justify-between bg-black bg-opacity-30">
+      <div className=" flex pl-24 pt-2 z-10 ">
+        <Link to={"/"}>
+          <img
+            className="w-44 "
+            src="https://movix-by-tapesh.vercel.app/assets/movix-logo-HTlvmwAF.svg"
+          />
+        </Link>
       </div>
       {user && (
-        <div className=" pt-4  flex gap-2">
-          <button
-            className="bg-purple-700 text-white px-3 rounded-lg font-bold"
-            onClick={toogleSearchBtn}
-          >
-            {search ? "Home" : "🔍 Search"}
+        <div className="flex justify-center  gap-6 pr-20">
+          <button className="text-white text-[16px] font-medium hover:text-pink-600 ">
+            Movies
           </button>
-          <img className="w-12 h-12 " alt="usericon" src={user?.photoURL} />
+          <button className="text-white  text-[16px] font-medium  hover:text-pink-600">
+            TV Shows
+          </button>
+
+          <button
+            className=" text-white text-2xl  font-bold hover:text-pink-600"
+           
+          >
+            <Link to={"search"}>
+            <IoSearch />
+            </Link>
+             
+          </button>
+
           <button
             onClick={handlesignout}
-            className="font-bold bg-red-600 px-3 rounded-lg text-white "
+            className="text-2xl px-2 text-white  hover:text-pink-600"
           >
-            Logout
+            <FaPowerOff />
           </button>
         </div>
       )}

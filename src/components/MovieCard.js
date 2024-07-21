@@ -15,7 +15,7 @@ const MovieCard = ({ posterPath, title, releaseDate,vote_average }) => {
         )}
       </div>
       <div className="absolute  mt-72  text-black font-bold">
-        <span className="mt-6 ml-6 absolute flex justify-center">{vote_average.toFixed(1)}</span>
+        <span className="mt-6 ml-6 absolute flex justify-center">{vote_average?.toFixed(1)}</span>
         <img className="object-fill rounded-full h-[70px] w-[70px]" src="https://th.bing.com/th/id/OIP.0hKzrylFaxJ_uGxRTsCiQAHaHa?rs=1&pid=ImgDetMain"/>
       </div>
       <div className="pt-9 flex flex-col gap-1">

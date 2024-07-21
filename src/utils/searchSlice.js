@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const searchSlice = createSlice({
   name: "search",
   initialState: {
+    searchtext:null,
     showsearch: false,
     searchMovies: null,
   },
@@ -13,10 +14,13 @@ const searchSlice = createSlice({
     addSearchMovieResult: (state, action) => {
       state.searchMovies = action.payload;
     },
+    addsearchtext :(state,action) => {
+      state.searchtext = action.payload;
+    },
   },
 });
 
-export const { toggleSearchBtnEvent, addSearchMovieResult } =
+export const { toggleSearchBtnEvent, addSearchMovieResult ,addsearchtext} =
   searchSlice.actions;
 
 export default searchSlice.reducer;

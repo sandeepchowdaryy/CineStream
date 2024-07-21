@@ -1,13 +1,14 @@
 import React, { useRef } from "react";
 //import openai from "./openai";
 import { API_Options } from "../utils/constants";
-import { addSearchMovieResult } from "../utils/searchSlice";
+import { addSearchMovieResult, addsearchtext } from "../utils/searchSlice";
 import { useDispatch } from "react-redux";
 
 const SearchBar = () => {
   const searchtext = useRef(null);
   const dispatch = useDispatch();
-
+ 
+  
   const searchmovietdb = async () => {
     const data = await fetch(
       "https://api.themoviedb.org/3/search/movie?query=" +
@@ -17,6 +18,7 @@ const SearchBar = () => {
     );
     const json = await data.json();
     //console.log(json.results);
+    dispatch(addsearchtext(searchtext.current.value));
     dispatch(addSearchMovieResult(json.results));
   };
 
