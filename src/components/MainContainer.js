@@ -19,11 +19,11 @@ localStorage.setItem('movieIndex', movieIndex);
 const mainMovie = movies[movieIndex];
   console.log(mainMovie);
   
-  const {title,overview,backdrop_path} = mainMovie;
+  const {title,overview,backdrop_path,id} = mainMovie;
   
   return (
     <div className="">
-      <VideoTitle title = {title} overview = {overview} />
+      <VideoTitle title = {title} overview = {overview} id = {id} />
       <VideoBackground movieId={backdrop_path} />
     </div>
   );

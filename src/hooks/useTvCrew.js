@@ -3,11 +3,11 @@ import { addMovieCrew } from "../utils/detailsSlice";
 import { useEffect, useState } from "react";
 import { API_Options } from "../utils/constants";
 
-const useMovieCrew = (movieId) => {
+const useTvCrew = (movieId) => {
   const [moviecrew , setmoviecrew] = useState();
   const NowPlayingMovies = async () => {
     const data = await fetch(
-      "https://api.themoviedb.org/3/movie/"+ movieId +"/credits?language=en-US",
+      "https://api.themoviedb.org/3/tv/"+ movieId +"/credits?language=en-US",
       API_Options
     );
     const json = await data.json();
@@ -25,4 +25,4 @@ const useMovieCrew = (movieId) => {
   return moviecrew;
 };
 
-export default useMovieCrew;
+export default useTvCrew;

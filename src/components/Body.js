@@ -7,6 +7,9 @@ import Browse from "./Browse";
 import { MovieDetails } from "./MovieDetails";
 import Layout from "./Layout";
 import { Search } from "./Search";
+import Movies from "./Movies";
+import TvShows from "./TvShows";
+import TvShowDetails from "./TvShowDetails";
 
 const appRouter = createBrowserRouter([
   {
@@ -26,8 +29,20 @@ const appRouter = createBrowserRouter([
         element:<Search/>
       },
       {
+        path:"movies",
+        element:<Movies/>
+      },
+      {
+        path:"tvshows",
+        element:<TvShows/>
+      },
+      {
         path: "movie/:movieId",
         element: <MovieDetails />,
+      },
+      {
+        path: "tv/:tvId",
+        element:<TvShowDetails/>
       },
     ],
   },

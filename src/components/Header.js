@@ -4,9 +4,7 @@ import { auth } from "../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { toggleSearchBtnEvent } from "../utils/searchSlice";
 import { IoSearch } from "react-icons/io5";
-import { FaHome } from "react-icons/fa";
 import { FaPowerOff } from "react-icons/fa";
 
 function Header() {
@@ -62,21 +60,19 @@ function Header() {
       </div>
       {user && (
         <div className="flex justify-center  gap-6 pr-20">
-          <button className="text-white text-[16px] font-medium hover:text-pink-600 ">
-            Movies
-          </button>
+         
+            <button className="text-white text-[16px] font-medium hover:text-pink-600 ">
+            <Link to={"/movies"}>Movies</Link>
+            </button>
+          
           <button className="text-white  text-[16px] font-medium  hover:text-pink-600">
-            TV Shows
+           <Link to={"/tvshows"} >TV Shows</Link> 
           </button>
 
-          <button
-            className=" text-white text-2xl  font-bold hover:text-pink-600"
-           
-          >
+          <button className=" text-white text-2xl  font-bold hover:text-pink-600">
             <Link to={"search"}>
-            <IoSearch />
+              <IoSearch />
             </Link>
-             
           </button>
 
           <button

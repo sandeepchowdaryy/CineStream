@@ -1,19 +1,18 @@
 import { useDispatch } from "react-redux";
-import { addMovieCrew } from "../utils/detailsSlice";
+import { addMovieDetails } from "../utils/detailsSlice";
 import { useEffect, useState } from "react";
 import { API_Options } from "../utils/constants";
 
-const useMovieCrew = (movieId) => {
-  const [moviecrew , setmoviecrew] = useState();
+const useTvDetails = (movieId) => {
+  const [moviedetails, setmoviedetails] = useState(null);
+
   const NowPlayingMovies = async () => {
     const data = await fetch(
-      "https://api.themoviedb.org/3/movie/"+ movieId +"/credits?language=en-US",
+      "https://api.themoviedb.org/3/tv/" + movieId + "?language=en-US",
       API_Options
     );
     const json = await data.json();
-  //  console.log(json);
-    // dispatch(addMovieCrew(json));
-    setmoviecrew(json);
+    setmoviedetails(json);
   };
 
   useEffect(() => {
@@ -22,7 +21,7 @@ const useMovieCrew = (movieId) => {
     }
   }, [movieId]);
 
-  return moviecrew;
+  return moviedetails;
 };
 
-export default useMovieCrew;
+export default useTvDetails;

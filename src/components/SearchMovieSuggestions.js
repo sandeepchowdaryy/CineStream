@@ -1,7 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MovieCard from "./MovieCard";
-import MovieList from "./MovieList";
 import { Link } from "react-router-dom";
 import { toggleSearchBtnEvent } from "../utils/searchSlice";
 

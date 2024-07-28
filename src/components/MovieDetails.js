@@ -1,18 +1,23 @@
 import React, { useEffect, useState } from "react";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useMovieDetails from "../hooks/useMovieDetails";
 import { Movie_IMGBig } from "../utils/constants";
 import { useSelector } from "react-redux";
 import useMovieTrailer from "../hooks/useMovieTrailer";
 import { RxCross2 } from "react-icons/rx";
 import useMovieCrew from "../hooks/useMovieCrew";
-import { TiStarFullOutline } from "react-icons/ti";
 import { Search } from "./Search";
 import useSimilarMovies from "../hooks/useSimilarMovies";
 import MovieList from "./MovieList";
+import {
+  FaFacebookF,
+  FaInstagram,
+  FaLinkedin,
+  FaTwitter,
+} from "react-icons/fa";
 
 export const MovieDetails = () => {
-  const { movieId } = useParams(); 
+  const { movieId } = useParams();
   const movies = useSelector((store) => store.movies);
   const [showtrailer, setshowtrailer] = useState(false);
   const [videoId, setvideoId] = useState(null);
@@ -27,11 +32,11 @@ export const MovieDetails = () => {
   );
   console.log(filteredData);
   const trailer = filteredData?.length ? filteredData[0] : video?.results[0];
-  
+
   useEffect(() => {
     console.log(`Movie ID has changed to: ${movieId}`);
   }, [movieId]);
- 
+
   const handleClick = () => {
     setshowtrailer(!showtrailer);
   };
@@ -41,10 +46,13 @@ export const MovieDetails = () => {
       {showsearch ? (
         <Search />
       ) : (
-        <div className="w-full">
+        <div className="w-full h-full">
           <div className="">
-            <div className="bgposter  object-cover absolute z-0">
-              <img src={Movie_IMGBig + movieDetails?.backdrop_path} />
+            <div className="bgposter absolute top-0 left-0 z-0">
+              <img
+                className="w-full object-cover h-full"
+                src={Movie_IMGBig + movieDetails?.backdrop_path}
+              />
             </div>
             <div className="gap-10 w-full moviedetails absolute bg-opacity-85 bg-black flex px-36 py-24">
               <div className="left">
@@ -81,17 +89,27 @@ export const MovieDetails = () => {
                 <div className="flex gap-5 justify-start items-center">
                   <div className="flex gap-2 justify-center items-center">
                     {/* <img className="w-[80px] rounded-full" src="https://th.bing.com/th/id/OIP.0hKzrylFaxJ_uGxRTsCiQAHaHa?rs=1&pid=ImgDetMain" /> */}
-                    <TiStarFullOutline className="text-4xl text-red-500" />
-                    <span className=" text-xl font-bold text-white">
+                    {/* <TiStarFullOutline className="text-4xl text-red-500" /> */}
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/477/477406.png"
+                      className="w-[50px]"
+                    />
+                    <span className=" text-3xl font-bold text-gray-100">
                       {movieDetails?.vote_average?.toFixed(1)}
                     </span>
                   </div>
                   <div>
                     <button
                       onClick={handleClick}
-                      className="bg-black rounded-lg  px-5 py-4 hover:text-red-500 "
+                      className=" flex justify-center items-center gap-2 bg-transparent rounded-lg  px-5 py-4 "
                     >
-                      Trailer
+                      <img
+                        className="w-[80px] h-[70px] hover:h-[80px]"
+                        src="https://www.svgrepo.com/show/475861/play-button.svg"
+                      />
+                      <h1 className="text-2xl text-gray-400 font-sans hover:text-white">
+                        Trailer
+                      </h1>
                     </button>
                     {showtrailer && (
                       <div>
@@ -174,99 +192,126 @@ export const MovieDetails = () => {
               </div>
             </div>
           </div>
-          <div className="movieCast">
-            <div className="absolute top-[42rem]  ">
-              <h1 className="text-white text-2xl font-semibold pl-20 ">
-                Top Cast
-              </h1>
-              <div className="w-[1415px] flex  gap-[20px] px-16 py-2  bg-black overflow-hidden overflow-x-scroll">
-                {moviecrew?.cast?.map((actor) => {
-                  if (actor?.profile_path === null) return;
-                  return (
-                    <div
-                      className="relative flex flex-col pb-10 gap-1 justify-center items-center min-w-[200px] p-2"
-                      key={actor.id}
-                    >
-                      <img
-                        className="w-[175px] h-[175px] rounded-full  object-cover"
-                        src={
-                          "https://image.tmdb.org/t/p/original" +
-                          actor?.profile_path
-                        }
-                      />
-                      <div className="text-white text-lg font-semibold line-clamp-1">
-                        {actor?.name}
-                      </div>
-                      <div className="text-gray-500 line-clamp-2 text-sm">
-                        {actor?.character}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-          <div className="movieTrailer">
-            <div className="absolute top-[61rem] bg-black">
-              <h1 className="text-white text-2xl font-semibold pl-16">
-                Official Video's
-              </h1>
-              <div className=" w-[1415px] px-20 py-8 flex gap-5 overflow-hidden overflow-x-scroll">
-               {/* {video?.results?.length() === 0 ? <img src="https://th.bing.com/th/id/OIP.7fAwhaYYXaSPsI0hJ90MPwHaHa?w=176&h=180&c=7&r=0&o=5&dpr=2&pid=1.7"/> : */}
-                {video?.results?.map((video) => {
-                  return (
-                    <div
-                      key={video?.id}
-                      className="relative flex flex-col gap-3"
-                      onClick={() => {
-                        setshowvideo(!showvideo);
-                        setvideoId(video.key);
-                      }}
-                    >
-                      <div className="videoThumbnail relative  w-[300px] ">
+          <div className="movieCast absolute top-[43rem]">
+            <div>
+              <div className="">
+                <h1 className="text-white text-2xl font-semibold pl-20 ">
+                  Top Cast
+                </h1>
+                <div className="w-[1415px] flex  gap-[20px] px-16 py-2  bg-black overflow-hidden overflow-x-scroll">
+                  {moviecrew?.cast?.map((actor) => {
+                    if (actor?.profile_path === null) return;
+                    return (
+                      <div
+                        className="relative flex flex-col pb-10 gap-1 justify-center items-center min-w-[200px] p-2"
+                        key={actor.id}
+                      >
                         <img
-                          className="w-full rounded-xl opacity-50"
+                          className="w-[175px] h-[175px] rounded-full  object-cover"
                           src={
-                            "https://img.youtube.com/vi/" +
-                            video?.key +
-                            "/mqdefault.jpg"
+                            "https://image.tmdb.org/t/p/original" +
+                            actor?.profile_path
                           }
                         />
-                        <div className=" absolute top-[40%] left-[45%] w-[60px] h-[60px] m-auto">
-                          <img
-                            className=""
-                            src="https://www.svgrepo.com/show/475861/play-button.svg"
-                          />
+                        <div className="text-white text-lg font-semibold line-clamp-1">
+                          {actor?.name}
+                        </div>
+                        <div className="text-gray-500 line-clamp-2 text-sm">
+                          {actor?.character}
                         </div>
                       </div>
-                      <div className="videoTitle text-gray-300 w-[300px] font-normal">
-                        {video?.name}
-                      </div>
-                    </div>
-                  );
-                })}{" "} 
+                    );
+                  })}
+                </div>
               </div>
             </div>
-          </div>
-          <div className="w-[1415px]  gap-5 pl-16 pt-6  bg-black text-white  similarmovies absolute top-[1240px]"> 
-          <MovieList name={"Similar Movies"} movies={movies?.similarmovies} />
-          
-        
-          {/* {movies?.similarmovies?.map((movie) => (
-            <Link to={"/movie/" + movie?.id} >
-              <MovieCard
-                key={movie.div}
-                posterPath={movie?.poster_path}
-                title={movie?.title}
-                releaseDate={movie?.release_date}
-                vote_average={movie?.vote_average}
-              />
-            </Link>
-          ))} */}
-          </div>
-          <div className="w-[1415px]  gap-5 pl-16 pt-6  bg-black text-white   absolute top-[1755px]">
-          <MovieList name={"Trending movies"} movies={movies?.trendingmovies} />
+            <div className="movieTrailer">
+              <div className="  bg-black">
+                <h1 className="text-white text-2xl font-semibold pl-20">
+                  Official Video's
+                </h1>
+                <div className=" w-[1415px] px-20 py-8 flex gap-5 overflow-hidden overflow-x-scroll">
+                  {video?.results?.map((video) => {
+                    return (
+                      <div
+                        key={video?.id}
+                        className="relative flex flex-col gap-3"
+                        onClick={() => {
+                          setshowvideo(!showvideo);
+                          setvideoId(video.key);
+                        }}
+                      >
+                        <div className="videoThumbnail relative  w-[300px] ">
+                          <img
+                            className="w-full rounded-xl opacity-50 hover:opacity-20"
+                            src={
+                              "https://img.youtube.com/vi/" +
+                              video?.key +
+                              "/mqdefault.jpg"
+                            }
+                          />
+                          <div className=" absolute top-[40%] left-[45%] w-[60px] h-[60px] m-auto">
+                            <img
+                              className="hover:text-white"
+                              src="https://www.svgrepo.com/show/475861/play-button.svg"
+                            />
+                          </div>
+                        </div>
+                        <div className="videoTitle text-gray-300 w-[300px] font-normal">
+                          {video?.name}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
             </div>
+
+            <div className="w-[1415px] bg-black  pl-14 text-white absolute">
+              <MovieList
+                name={"Similar Movies"}
+                movies={movies?.similarmovies}
+                type={"movie"}
+              />
+              <MovieList
+                name={"Trending movies"}
+                movies={movies?.trendingmovies}
+                type={"movie"}
+              />
+              <footer className="footer  bottom-0  text-white flex flex-col gap-8 py-10 justify-center items-center bg-black">
+                <ul className="menuItems flex gap-7">
+                  <li className="menuItem">Terms Of Use</li>
+                  <li className="menuItem">Privacy-Policy</li>
+                  <li className="menuItem">About</li>
+                  <li className="menuItem">Blog</li>
+                  <li className="menuItem">FAQ</li>
+                </ul>
+                <div className="infoText max-w-[900px] text-gray-500 text-sm text-center">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                  Ut enim ad minim veniam, quis nostrud exercitation ullamco
+                  laboris nisi ut aliquip ex ea commodo consequat. Duis aute
+                  irure dolor in reprehenderit in voluptate velit esse cillum
+                  dolore eu fugiat nulla pariatur.
+                </div>
+                <div className="socialIcons flex gap-5 text-xl">
+                  <span className="icon">
+                    <FaFacebookF />
+                  </span>
+                  <span className="icon">
+                    <FaInstagram />
+                  </span>
+                  <span className="icon">
+                    <FaTwitter />
+                  </span>
+                  <span className="icon">
+                    <FaLinkedin />
+                  </span>
+                </div>
+              </footer>
+            </div>
+          </div>
+
           {showvideo && (
             <div className="fixed top-[25%] left-[20%] m-auto">
               <RxCross2

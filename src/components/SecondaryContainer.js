@@ -11,11 +11,31 @@ const SecondaryContainer = () => {
     movies?.nowplayingmovies && (
       <div className=" text-white bg-black ">
         <div className=" ml-10 -mt-56 relative z-20">
-          <MovieList name={"Now Playing"} movies={movies?.nowplayingmovies} />
-          <MovieList name={"TopRated Movies"} movies={movies?.topmovies} />
-          <MovieList name={"Trending"} movies={movies?.trendingmovies} />
-          <MovieList name={"Popular"} movies={movies?.popularmovies} />
-          <MovieList name={"Upcomming"} movies={movies?.upcomingmovies} />
+          <MovieList
+            name={"Now Playing"}
+            movies={movies?.nowplayingmovies}
+            type={"movie"}
+          />
+          <MovieList
+            name={"TopRated Movies"}
+            movies={movies?.topmovies}
+            type={"movie"}
+          />
+          <MovieList
+            name={"Trending"}
+            movies={movies?.trendingmovies}
+            type={"movie"}
+          />
+          <MovieList
+            name={"Popular"}
+            movies={movies?.popularmovies}
+            type={"movie"}
+          />
+          <MovieList
+            name={"Upcomming"}
+            movies={movies?.upcomingmovies}
+            type={"movie"}
+          />
         </div>
       </div>
     )

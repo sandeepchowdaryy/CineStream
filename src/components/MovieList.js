@@ -2,7 +2,7 @@ import React from "react";
 import MovieCard from "./MovieCard";
 import { Link } from "react-router-dom";
 
-const MovieList = ({ name, movies }) => {
+const MovieList = ({ name, movies ,type }) => {
   //console.log(movies);
   return (
     <div>
@@ -11,7 +11,7 @@ const MovieList = ({ name, movies }) => {
         <div className="flex overflow-x-scroll overflow-y-hidden">
           <div className="flex gap-4 ">
             {movies?.map((movie) => (
-              <Link to={"/movie/"+movie.id}>
+              <Link to={"/"+type+"/"+movie.id}>
                 <MovieCard
                   key={movie.div}
                   posterPath={movie?.poster_path}
