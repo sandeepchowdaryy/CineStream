@@ -2,10 +2,12 @@ import React from 'react'
 import useTvshows from '../hooks/useTvshows'
 import { Link } from 'react-router-dom';
 import MovieCard from './MovieCard';
+import Footer from './Footer';
+import ShimmerPages from './ShimmerPages';
 
 function TvShows() {
   const tvshows = useTvshows();
-  return (
+  return tvshows?.results?.length === 0 ? (<ShimmerPages/>):(
     <div className="bg-black text-white">
     <div className="flex ">
       <div className="flex flex-wrap justify-center items-center gap-7 w-screen pt-20">
@@ -22,6 +24,7 @@ function TvShows() {
         ))}
       </div>
     </div>
+    <Footer/>
   </div>
   )
 }

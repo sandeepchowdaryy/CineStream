@@ -15,6 +15,7 @@ import {
   FaLinkedin,
   FaTwitter,
 } from "react-icons/fa";
+import Shimmer from "./Shimmer";
 
 export const MovieDetails = () => {
   const { movieId } = useParams();
@@ -32,7 +33,6 @@ export const MovieDetails = () => {
   );
   console.log(filteredData);
   const trailer = filteredData?.length ? filteredData[0] : video?.results[0];
-
   useEffect(() => {
     console.log(`Movie ID has changed to: ${movieId}`);
   }, [movieId]);
@@ -41,7 +41,10 @@ export const MovieDetails = () => {
     setshowtrailer(!showtrailer);
   };
 
-  return (
+  return movieDetails === null ? (
+    <Shimmer/>
+    
+  ) : (
     <div>
       {showsearch ? (
         <Search />
@@ -66,7 +69,7 @@ export const MovieDetails = () => {
               </div>
               <div className="right flex flex-col gap-5  text-white">
                 <div className="flex flex-col gap-2 title of movie">
-                  <span className="text-4xl">{movieDetails?.title}</span>
+                  <span className="text-4xl line-clamp-1">{movieDetails?.title}</span>
                   <span className="test-xl text-gray-400">
                     {movieDetails?.tagline}
                   </span>
@@ -138,7 +141,7 @@ export const MovieDetails = () => {
                 </div>
                 <div>
                   <span className="text-2xl pb-10">Overview</span>
-                  <p className="max-w-[650px] text-gray-400 line-clamp-6 ">
+                  <p className="max-w-[650px] text-gray-400 line-clamp-5 ">
                     {movieDetails?.overview}
                   </p>
                 </div>
@@ -198,7 +201,7 @@ export const MovieDetails = () => {
                 <h1 className="text-white text-2xl font-semibold pl-20 ">
                   Top Cast
                 </h1>
-                <div className="w-[1415px] flex  gap-[20px] px-16 py-2  bg-black overflow-hidden overflow-x-scroll">
+                <div className="w-[1415px] flex  gap-[20px] px-16 py-2  bg-black overflow-hidden overflow-x-scroll no-scrollbar">
                   {moviecrew?.cast?.map((actor) => {
                     if (actor?.profile_path === null) return;
                     return (
@@ -230,7 +233,7 @@ export const MovieDetails = () => {
                 <h1 className="text-white text-2xl font-semibold pl-20">
                   Official Video's
                 </h1>
-                <div className=" w-[1415px] px-20 py-8 flex gap-5 overflow-hidden overflow-x-scroll">
+                <div className=" w-[1415px] px-20 py-8 flex gap-5 overflow-hidden overflow-x-scroll no-scrollbar">
                   {video?.results?.map((video) => {
                     return (
                       <div

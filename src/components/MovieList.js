@@ -8,7 +8,7 @@ const MovieList = ({ name, movies ,type }) => {
     <div>
       <div className="pl-6 pb-10">
         <h1 className="text-2xl font-bold my-5">{name}</h1>
-        <div className="flex overflow-x-scroll overflow-y-hidden">
+        <div className="flex overflow-x-scroll overflow-y-hidden no-scrollbar">
           <div className="flex gap-4 ">
             {movies?.map((movie) => (
               <Link to={"/"+type+"/"+movie.id}>

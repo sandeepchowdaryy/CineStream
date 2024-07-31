@@ -51,7 +51,7 @@ function Header() {
   return (
     <div className=" -mb-5  fixed z-50 w-screen pr-3  flex justify-between bg-black bg-opacity-30">
       <div className=" flex pl-24 pt-2 z-10 ">
-        <Link to={"/"}>
+        <Link to={"/browse"}>
           <img
             className="w-44 "
             src="https://movix-by-tapesh.vercel.app/assets/movix-logo-HTlvmwAF.svg"

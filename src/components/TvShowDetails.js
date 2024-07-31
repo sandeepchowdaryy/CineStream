@@ -4,7 +4,6 @@ import { Movie_IMGBig } from "../utils/constants";
 import { useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import { Search } from "./Search";
-import useSimilarMovies from "../hooks/useSimilarMovies";
 import MovieList from "./MovieList";
 import {
   FaFacebookF,
@@ -16,6 +15,7 @@ import useTvDetails from "../hooks/useTvDetails";
 import useTvTrailer from "../hooks/useTvTrailer";
 import useTvCrew from "../hooks/useTvCrew";
 import useSimilarTvShows from "../hooks/useSimilarTvShows";
+import Shimmer from "./Shimmer";
 
 const TvShowDetails = () => {
     const { tvId } = useParams();
@@ -42,7 +42,7 @@ const TvShowDetails = () => {
       setshowtrailer(!showtrailer);
     };
   
-    return (
+    return  movieDetails  === null ? ( <Shimmer/> ): (
       <div>
         {showsearch ? (
           <Search />
@@ -198,7 +198,7 @@ const TvShowDetails = () => {
                   <h1 className="text-white text-2xl font-semibold pl-20 ">
                     Top Cast
                   </h1>
-                  <div className="w-[1415px] flex  gap-[20px] px-16 py-2  bg-black overflow-hidden overflow-x-scroll">
+                  <div className="w-[1415px] flex  gap-[20px] px-16 py-2  bg-black overflow-hidden overflow-x-scroll no-scrollbar">
                     {moviecrew?.cast?.map((actor) => {
                       if (actor?.profile_path === null) return;
                       return (
@@ -230,7 +230,7 @@ const TvShowDetails = () => {
                   <h1 className="text-white text-2xl font-semibold pl-20">
                     Official Video's
                   </h1>
-                  <div className=" w-[1415px] px-20 py-8 flex gap-5 overflow-hidden overflow-x-scroll">
+                  <div className=" w-[1415px] px-20 py-8 flex gap-5 overflow-hidden overflow-x-scroll no-scrollbar">
                     {video?.results?.map((video) => {
                       return (
                         <div
@@ -339,7 +339,7 @@ const TvShowDetails = () => {
           </div>
         )}
       </div>
-    );
+    ); 
 }
 
 export default TvShowDetails
