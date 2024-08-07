@@ -5,30 +5,31 @@ import useMovieTrailer from "../hooks/useMovieTrailer";
 import { RxCross2 } from "react-icons/rx";
 
 const VideoTitle = ({ title, overview, id }) => {
-  const [showvideo, setshowvideo] = useState(null);
+  const [showVideo, setShowVideo] = useState(null);
   const trailerData = useMovieTrailer(id);
   const filteredData = trailerData?.results?.filter(
     (video) => video.type === "Trailer"
   );
   const trailer = filteredData?.length
     ? filteredData[0]
-    : filteredData?.results[0];
-  console.log(trailer);
-  const handleclick = () => {
-    setshowvideo(!showvideo);
+    : trailerData?.results[0];
+
+  const handleClick = () => {
+    setShowVideo(!showVideo);
   };
-  return  (
-    <div className="absolute w-full   bg-gradient-to-r  from-black  px-16 py-[24%]  text-white">
-      <h1 className="text-3xl font-bold py-4">{title}</h1>
-      <p className=" w-[550px] overflow-hidden text-ellipsis text-gray-400 line-clamp-4">
+
+  return (
+    <div className="absolute w-full bg-gradient-to-r from-black md:px-16 md:py-[24%] px-10 py-[40%] text-white">
+      <h1 className="text-3xl font-bold md:py-4 line-clamp-1">{title}</h1>
+      <p className="md:w-[900px] md:inline-block hidden  overflow-hidden text-ellipsis md:text-gray-400 text-gray-300  line-clamp-4">
         {overview}
       </p>
       <div className="pt-4 pb-6 flex gap-3">
         <button
           className="bg-white text-black text-xl py-1 px-5 rounded-md hover:opacity-80"
-          onClick={handleclick}
+          onClick={handleClick}
+          aria-label="Play Trailer"
         >
-          {" "}
           ▶️ Play
         </button>
         <Link to={"/movie/" + id}>
@@ -38,28 +39,21 @@ const VideoTitle = ({ title, overview, id }) => {
           </button>
         </Link>
       </div>
-      {showvideo && (
-        <div className="fixed top-[15%] left-[20%] m-auto">
+      {showVideo && (
+        <div className="fixed md:top-[15%] md:left-[20%] top-[12%] left-[10%]  m-auto">
           <RxCross2
-            onClick={() => {
-              setshowvideo(!showvideo);
-            }}
-            className="absolute  text-3xl text-white left-[870px] cursor-pointer"
+            onClick={handleClick}
+            className="text-3xl text-white md:left-[900px] cursor-pointer"
+            aria-label="Close Trailer"
           />
           <iframe
-            className="absolute "
-            width="820"
-            height="455"
-            src={
-              "https://www.youtube.com/embed/" +
-              trailer?.key +
-              "?si=4nOx2hdEtLq4l5jL"
-            }
+            className="absolute md:w-[800px] md:h-[450px] w-[400px] h-[250px] z-50"
+            src={`https://www.youtube.com/embed/${trailer?.key}?si=4nOx2hdEtLq4l5jL`}
             title="YouTube video player"
-            frameborder="0"
+            frameBorder="0"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen
+            referrerPolicy="strict-origin-when-cross-origin"
+            allowFullScreen
           ></iframe>
         </div>
       )}

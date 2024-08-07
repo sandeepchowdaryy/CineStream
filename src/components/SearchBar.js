@@ -23,19 +23,19 @@ const SearchBar = () => {
   };
 
   return (
-    <div className="pt-[10%] bg-black flex justify-center">
+    <div className="md:pt-[10%] pt-[26%] bg-black flex sm:flex-col  justify-center items-center">
       <form
-        className="w-1/2  grid grid-cols-12 mb-10 "
+        className="md:w-1/2 w-[90%] grid grid-cols-12 mb-10 "
         onSubmit={(e) => e.preventDefault()}
       >
         <input
           ref={searchtext}
-          className="col-span-9 p-3 m-3 rounded-lg"
+          className="col-span-8 p-3 m-3 rounded-lg"
           type="text"
           placeholder="Search for Movie's and TV Shows"
         />
         <button
-          className="col-span-3 rounded-lg  bg-red-700 text-white py-2 px-4 m-3"
+          className="col-span-4 rounded-lg  bg-gray-700 text-white py-2 px-4 m-3"
           type="submit"
           onClick={searchmovietdb}
         >

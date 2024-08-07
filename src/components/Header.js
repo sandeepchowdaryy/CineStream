@@ -1,5 +1,5 @@
 import { onAuthStateChanged, signOut } from "firebase/auth";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { auth } from "../utils/firebase";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,13 +11,13 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((store) => store.user);
-  const search = useSelector((store) => store.search.showsearch);
+  const [prevScrollPos, setPrevScrollPos] = useState(window.pageYOffset);
+  const [visible, setVisible] = useState(true);
 
   const handlesignout = () => {
     signOut(auth)
       .then(() => {})
-      .catch((error) => {
-        // An error happened.
+      .catch(() => {
         navigate("/error");
       });
   };
@@ -27,12 +27,7 @@ function Header() {
       if (user) {
         const { uid, email, displayName, photoURL } = user;
         dispatch(
-          addUser({
-            uid: uid,
-            email: email,
-            displayName: displayName,
-            photoURL: photoURL,
-          })
+          addUser({ uid, email, displayName, photoURL })
         );
         navigate("/browse");
       } else {
@@ -40,44 +35,68 @@ function Header() {
         navigate("/");
       }
     });
-    // it will unsubscribe when the component will unmount
     return () => unsubscribe();
-  }, []);
+  }, [dispatch, navigate]);
 
-  // const toogleSearchBtn = () => {
-  //   dispatch(toggleSearchBtnEvent());
-  // };
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      const visible = prevScrollPos > currentScrollPos || currentScrollPos < 10;
+
+      setVisible(visible);
+      setPrevScrollPos(currentScrollPos);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [prevScrollPos]);
 
   return (
-    <div className=" -mb-5  fixed z-50 w-screen pr-3  flex justify-between bg-black bg-opacity-30">
-      <div className=" flex pl-24 pt-2 z-10 ">
-        <Link to={"/browse"}>
+    <div
+      id="header"
+      className={`fixed w-full h-24 z-50 flex flex-col pb-3  md:flex-row md:h-16 items-center justify-between transition-transform duration-1000 ease-in-out ${
+        visible ? 'translate-y-0' : '-translate-y-full'
+      }`}
+      style={{
+        backgroundColor: "rgba(0, 0, 0, 0.25)",
+        backdropFilter: "blur(3px)",
+        WebkitBackdropFilter: "blur(3.5px)"
+      }}
+    >
+      <div className="flex pl-4 md:pl-24 pt-2 z-10">
+        <Link to="/browse">
           <img
-            className="w-44 "
+            className="h-10 md:h-12"
             src="https://movix-by-tapesh.vercel.app/assets/movix-logo-HTlvmwAF.svg"
+            alt="Logo"
           />
         </Link>
       </div>
       {user && (
-        <div className="flex justify-center  gap-6 pr-20">
-         
-            <button className="text-white text-[16px] font-medium hover:text-pink-600 ">
-            <Link to={"/movies"}>Movies</Link>
+        <div className="flex items-center justify-center text-[17px] gap-8 md:gap-6 pr-4 md:pr-20">
+          <Link to="/browse">
+            <button className="text-white  md:text-[16px] font-medium hover:text-pink-600">
+              Home
             </button>
-          
-          <button className="text-white  text-[16px] font-medium  hover:text-pink-600">
-           <Link to={"/tvshows"} >TV Shows</Link> 
-          </button>
-
-          <button className=" text-white text-2xl  font-bold hover:text-pink-600">
-            <Link to={"search"}>
+          </Link>
+          <Link to="/movies">
+            <button className="text-white  md:text-[16px] font-medium hover:text-pink-600">
+              Movies
+            </button>
+          </Link>
+          <Link to="/tvshows">
+            <button className="text-white md:text-[16px] font-medium hover:text-pink-600">
+              TV Shows
+            </button>
+          </Link>
+          <Link to="/search">
+            <button className="text-white pt-1 text-xl md:text-2xl font-bold hover:text-pink-600">
               <IoSearch />
-            </Link>
-          </button>
-
+            </button>
+          </Link>
           <button
             onClick={handlesignout}
-            className="text-2xl px-2 text-white  hover:text-pink-600"
+            className="text-xl md:text-2xl px-2 text-white hover:text-pink-600"
           >
             <FaPowerOff />
           </button>

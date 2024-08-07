@@ -1,23 +1,26 @@
 import { useEffect, useState } from "react";
 import { API_Options } from "../utils/constants";
 
-const useMovies = () => {
+const useMovies = (page = 1) => {
   const [moviedetails, setmoviedetails] = useState(null);
 
-  const NowPlayingMovies = async () => {
-    const data = await fetch(
-      "https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc",
-      API_Options
-    );
-    const json = await data.json();
-    console.log(json);
-    setmoviedetails(json);
-    // dispatch(addMovieDetails(jsons));
+  const fetchMovies = async (page) => {
+    try {
+      const data = await fetch(
+        `https://api.themoviedb.org/3/discover/movie?include_adult=true&include_video=true&language=en-US&page=${page}&sort_by=popularity.desc`,
+        API_Options
+      );
+      const json = await data.json();
+      setmoviedetails(json);
+    } catch (error) {
+      console.error("Error fetching movies:", error);
+      setmoviedetails([]);
+    }
   };
 
   useEffect(() => {
-    NowPlayingMovies();
-  }, []);
+    fetchMovies(page);
+  }, [page]);
 
   return moviedetails;
 };

@@ -8,7 +8,7 @@ const VideoBackground = ({ movieId }) => {
 
   return (
     <div className="">
-      <img className="w-screen aspect-video" src={Movie_IMGBig+movieId} />
+      <img className="w-screen h-[25rem] md:h-screen   aspect-video object-cover" src={Movie_IMGBig+movieId} />
     </div>
   );
 };

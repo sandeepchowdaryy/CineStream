@@ -13,7 +13,7 @@ const SearchMovieSuggestions = () => {
   };
 
   return (
-    <div className="pl-20 bg-black pt-10 pb-20 text-white overflow-hidden">
+    <div className="pl-5 md:pl-20 bg-black pt-8 pb-20 text-white overflow-hidden ">
       <div className="">
         {searchMovies && (
           <h1 className="text-3xl font-sans pb-10">
@@ -37,7 +37,7 @@ const SearchMovieSuggestions = () => {
         </div>
       </div>
       <h1 className="text-3xl font-semibold pb-6">Trending Movies</h1>
-      <div className="flex gap-5 overflow-x-scroll">
+      <div className="flex gap-5 overflow-x-scroll no-scrollbar">
         {!searchMovies &&
           movies?.trendingmovies?.map((movie) => (
             <Link to={"/movie/" + movie?.id} onClick={toogleSearchBtn}>

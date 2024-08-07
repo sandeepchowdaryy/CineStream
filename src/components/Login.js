@@ -86,10 +86,10 @@ function Login() {
 
   return (
     <div>
-      <div className="bg-black h-full p-24">
+      <div className="bg-black h-full md:p-24 pt-24">
         <form
           onSubmit={(e) => e.preventDefault()}
-          className=" flex flex-col gap-4 w-[37%] bg-gray-800 text-white p-10  mx-auto right-0 left-0 rounded-xl"
+          className=" flex flex-col gap-4 md:w-[37%] w-[80%]  bg-gray-800 text-white p-10  mx-auto right-0 left-0 rounded-xl"
         >
            <div className="flex flex-col justify-center items-center gap-2">
            <h1 className="font-semibold ">Sample Credentials :</h1>

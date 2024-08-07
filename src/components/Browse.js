@@ -18,7 +18,7 @@ function Browse() {
   useTopRatedMovies();
   useUpcomingMovies();
   useTrendingMovies();
-  const movies = useSelector((store) => store.movies?.nowplayingmovies);
+  const movies = useSelector((store) => store.movies);
   
   return movies?.length === 0 ?  <ShimmerBrowse/> : (
     

@@ -5,17 +5,12 @@ import { useSelector } from "react-redux";
 import { RxCross2 } from "react-icons/rx";
 import { Search } from "./Search";
 import MovieList from "./MovieList";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedin,
-  FaTwitter,
-} from "react-icons/fa";
 import useTvDetails from "../hooks/useTvDetails";
 import useTvTrailer from "../hooks/useTvTrailer";
 import useTvCrew from "../hooks/useTvCrew";
 import useSimilarTvShows from "../hooks/useSimilarTvShows";
 import Shimmer from "./Shimmer";
+import Footer from "./Footer";
 
 const TvShowDetails = () => {
     const { tvId } = useParams();
@@ -28,318 +23,204 @@ const TvShowDetails = () => {
     const video = useTvTrailer(tvId);
     const moviecrew = useTvCrew(tvId);
     useSimilarTvShows(tvId);
+
     const filteredData = video?.results?.filter(
       (video) => video.type === "Trailer"
     );
-    console.log(filteredData);
     const trailer = filteredData?.length ? filteredData[0] : video?.results[0];
   
     useEffect(() => {
-      console.log(`Movie ID has changed to: ${tvId}`);
+      console.log(`TV Show ID has changed to: ${tvId}`);
     }, [tvId]);
   
     const handleClick = () => {
       setshowtrailer(!showtrailer);
     };
   
-    return  movieDetails  === null ? ( <Shimmer/> ): (
-      <div>
+    return movieDetails === null ? (
+      <Shimmer />
+    ) : (
+      <div className="w-full h-full bg-black text-white">
         {showsearch ? (
           <Search />
         ) : (
-          <div className="w-full h-full">
-            <div className="">
-              <div className="bgposter absolute top-0 left-0 z-0">
+          <div>
+            <div className="relative">
+              <div className="absolute md:block hidden top-0 left-0 w-full h-[300px] md:h-[500px] z-0">
                 <img
-                  className="w-full object-cover h-full"
+                  className="w-full h-full object-cover"
                   src={Movie_IMGBig + movieDetails?.backdrop_path}
+                  alt={movieDetails?.name}
                 />
               </div>
-              <div className="gap-10 w-full moviedetails absolute bg-opacity-85 bg-black flex px-36 py-24">
-                <div className="left">
+              <div className="relative z-10 flex flex-col md:flex-row items-start gap-8 px-4 md:px-8 lg:px-16 py-6 md:py-12 bg-black bg-opacity-75">
+                <div className="flex-shrink-0 w-full md:w-1/3 lg:w-1/4">
                   <img
-                    className="w-[370px] rounded-lg"
-                    src={
-                      "https://image.tmdb.org/t/p/original" +
-                      movieDetails?.poster_path
-                    }
+                    className="w-full rounded-lg"
+                    src={"https://image.tmdb.org/t/p/original" + movieDetails?.poster_path}
+                    alt={movieDetails?.name}
                   />
                 </div>
-                <div className="right flex flex-col gap-5  text-white">
-                  <div className="flex flex-col gap-2 title of movie">
-                    <span className="text-4xl font-sans">{movieDetails?.name}</span>
-                    <span className="test-xl text-gray-400">
-                      {movieDetails?.tagline}
-                    </span>
+                <div className="flex-grow text-white">
+                  <div className="mb-4">
+                    <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold">{movieDetails?.name}</h1>
+                    <p className="text-lg md:text-xl text-gray-400">{movieDetails?.tagline}</p>
                   </div>
-                  <div className="genre text-[12px] flex gap-3">
-                    {/* {movieDetails?.genres?.map((genre) => genre?.name)?.join(" , ")} */}
-                    {movieDetails?.genres?.map((id) => {
-                      if (!id.id) return;
-                      return (
-                        <div
-                          className="genre bg-pink-900 p-1 rounded-lg whitespace-nowrap text-white "
-                          key={id}
-                        >
-                          {id.name}
-                        </div>
-                      );
-                    })}
-                  </div>
-  
-                  <div className="flex gap-5 justify-start items-center">
-                    <div className="flex gap-2 justify-center items-center">
-                      {/* <img className="w-[80px] rounded-full" src="https://th.bing.com/th/id/OIP.0hKzrylFaxJ_uGxRTsCiQAHaHa?rs=1&pid=ImgDetMain" /> */}
-                      {/* <TiStarFullOutline className="text-4xl text-red-500" /> */}
-                      <img
-                        src="https://cdn-icons-png.flaticon.com/512/477/477406.png"
-                        className="w-[50px]"
-                      />
-                      <span className=" text-3xl font-bold text-gray-100">
-                        {movieDetails?.vote_average?.toFixed(1)}
-                      </span>
-                    </div>
-                    <div>
-                      <button
-                        onClick={handleClick}
-                        className=" flex justify-center items-center gap-2 bg-transparent rounded-lg  px-5 py-4 "
+                  <div className="mb-4 flex flex-wrap gap-2 text-xs md:text-sm">
+                    {movieDetails?.genres?.map((genre) => (
+                      <span
+                        className="bg-pink-900 p-1 rounded-lg text-white"
+                        key={genre.id}
                       >
-                        <img
-                          className="w-[80px] h-[70px] hover:h-[80px]"
-                          src="https://www.svgrepo.com/show/475861/play-button.svg"
-                        />
-                        <h1 className="text-2xl text-gray-400 font-sans hover:text-white">
-                          Trailer
-                        </h1>
-                      </button>
-                      {showtrailer && (
-                        <div>
-                          <RxCross2
-                            onClick={handleClick}
-                            className="absolute top-[160px] text-3xl left-[1070px]"
-                          />
-                          <iframe
-                            className="absolute top-[200px] left-[280px]"
-                            width="820"
-                            height="455"
-                            src={
-                              "https://www.youtube.com/embed/" +
-                              trailer?.key +
-                              "?si=4nOx2hdEtLq4l5jL"
-                            }
-                            title="YouTube video player"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                            referrerpolicy="strict-origin-when-cross-origin"
-                            allowfullscreen
-                          ></iframe>
-                        </div>
-                      )}
+                        {genre.name}
+                      </span>
+                    ))}
+                  </div>
+                  <div className="flex gap-8">
+                  <div className="flex items-center mb-4">
+                    <img
+                      src="https://cdn-icons-png.flaticon.com/512/477/477406.png"
+                      className="w-[50px] mr-2"
+                      alt="Rating"
+                    />
+                    <span className="text-2xl font-bold">{movieDetails?.vote_average?.toFixed(1)}</span>
+                  </div>
+                  <button
+                    onClick={handleClick}
+                    className="flex items-center gap-2 bg-transparent rounded-lg px-4 py-2 "
+                  >
+                    <img
+                      className="w-16 h-16"
+                      src="https://www.svgrepo.com/show/475861/play-button.svg"
+                      alt="Play"
+                    />
+                    <span className="text-xl hover:text-red-500">Trailer</span>
+                  </button> </div>
+                  {showtrailer && trailer && (
+                    <div className="relative mt-4">
+                      <RxCross2
+                        onClick={handleClick}
+                        className="absolute top-0 right-0 text-3xl cursor-pointer"
+                      />
+                      <iframe
+                        className="w-full h-[315px] md:h-[500px] mt-4"
+                        src={"https://www.youtube.com/embed/" + trailer.key}
+                        title="YouTube video player"
+                        frameBorder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
                     </div>
+                  )}
+                  <div className="mt-4">
+                    <h2 className="text-xl mb-2">Overview</h2>
+                    <p className="text-gray-400 line-clamp-5">{movieDetails?.overview}</p>
                   </div>
-                  <div>
-                    <span className="text-2xl pb-10">Overview</span>
-                    <p className="max-w-[650px] text-gray-400 line-clamp-6 ">
-                      {movieDetails?.overview}
-                    </p>
-                  </div>
-                  {/* <div className="flex gap-4">
-                    <p className="font-semibold">
-                      Status:{" "}
-                      <span className="text-gray-500">
-                        {" "}
-                        {movieDetails?.status}
-                      </span>{" "}
-                    </p>
-                    <p>
-                      Release:{" "}
-                      <span className="text-gray-500">
-                        {" "}
-                        {movieDetails?.release_date}
-                      </span>
-                    </p>
-                    <p>
-                      Runtime:{" "}
-                      <span className="text-gray-500">
-                        {movieDetails?.runtime}m
-                      </span>
-                    </p>
-                  </div> */}
-                  <div className="flex flex-col gap-5">
-                    <p className="flex">
-                      <p className="font-semibold">
-                      Status:{" "}
-                      <span className="text-gray-500 font-semibold ">
-                        {" "}
-                        {movieDetails?.status}
-                      </span>{" "}
-                    </p>
-                    </p>
-                    <p className="flex">
-                      Producer:{" "}
-                      <span className="pl-2 text-gray-500 line-clamp-1 ">
-                        {moviecrew?.crew
-                          ?.filter((res) => res.department === "Production")
-                          .map((director, idx) => (
-                            <div key={idx}>
-                              {director.name}
-                              {idx < director.length - 1 && ","}
-                            </div>
-                          ))}
-                      </span>
-                    </p>
+                  <div className="mt-4 flex flex-col gap-2">
+                    <p>Status: <span className="text-gray-500">{movieDetails?.status}</span></p>
+                    <p>Producer: <span className="text-gray-500">
+                      {moviecrew?.crew
+                        ?.filter((member) => member.department === "Production")
+                        .map((producer, idx) => (
+                          <span key={producer.id}>
+                            {producer.name}
+                            {idx < moviecrew.crew.length - 1 && ", "}
+                          </span>
+                        ))}
+                    </span></p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="movieCast absolute top-[43rem]">
-              <div>
-                <div className="">
-                  <h1 className="text-white text-2xl font-semibold pl-20 ">
-                    Top Cast
-                  </h1>
-                  <div className="w-[1415px] flex  gap-[20px] px-16 py-2  bg-black overflow-hidden overflow-x-scroll no-scrollbar">
-                    {moviecrew?.cast?.map((actor) => {
-                      if (actor?.profile_path === null) return;
-                      return (
-                        <div
-                          className="relative flex flex-col pb-10 gap-1 justify-center items-center min-w-[200px] p-2"
-                          key={actor.id}
-                        >
-                          <img
-                            className="w-[175px] h-[175px] rounded-full  object-cover"
-                            src={
-                              "https://image.tmdb.org/t/p/original" +
-                              actor?.profile_path
-                            }
-                          />
-                          <div className="text-white text-lg font-semibold line-clamp-1">
-                            {actor?.name}
-                          </div>
-                          <div className="text-gray-500 line-clamp-2 text-sm">
-                            {actor?.character}
-                          </div>
+            <div className="py-6 md:py-12">
+              <h2 className="text-2xl font-semibold pl-4 md:pl-8 lg:pl-16">Top Cast</h2>
+              <div className="flex overflow-x-auto gap-4 px-4 md:px-8 lg:px-16">
+                {moviecrew?.cast?.map((actor) => (
+                  <div className="flex-shrink-0 w-[150px] md:w-[200px]" key={actor.id}>
+                    {actor.profile_path && (
+                      <div className="flex flex-col items-center">
+                        <img
+                          className="w-full h-[175px] rounded-full object-cover"
+                          src={"https://image.tmdb.org/t/p/original" + actor.profile_path}
+                          alt={actor.name}
+                        />
+                        <div className="text-center mt-2">
+                          <p className="text-white font-semibold">{actor.name}</p>
+                          <p className="text-gray-500 text-sm">{actor.character}</p>
                         </div>
-                      );
-                    })}
+                      </div>
+                    )}
                   </div>
-                </div>
+                ))}
               </div>
-              <div className="movieTrailer">
-                <div className="  bg-black">
-                  <h1 className="text-white text-2xl font-semibold pl-20">
-                    Official Video's
-                  </h1>
-                  <div className=" w-[1415px] px-20 py-8 flex gap-5 overflow-hidden overflow-x-scroll no-scrollbar">
-                    {video?.results?.map((video) => {
-                      return (
-                        <div
-                          key={video?.id}
-                          className="relative flex flex-col gap-3"
-                          onClick={() => {
-                            setshowvideo(!showvideo);
-                            setvideoId(video.key);
-                          }}
-                        >
-                          <div className="videoThumbnail relative  w-[300px] ">
-                            <img
-                              className="w-full rounded-xl opacity-50 hover:opacity-20"
-                              src={
-                                "https://img.youtube.com/vi/" +
-                                video?.key +
-                                "/mqdefault.jpg"
-                              }
-                            />
-                            <div className=" absolute top-[40%] left-[45%] w-[60px] h-[60px] m-auto">
-                              <img
-                                className="hover:text-white"
-                                src="https://www.svgrepo.com/show/475861/play-button.svg"
-                              />
-                            </div>
-                          </div>
-                          <div className="videoTitle text-gray-300 w-[300px] font-normal">
-                            {video?.name}
-                          </div>
-                        </div>
-                      );
-                    })}
+            </div>
+            <div className="py-6 md:py-12">
+              <h2 className="text-2xl font-semibold pl-4 md:pl-8 lg:pl-16">Official Videos</h2>
+              <div className="flex overflow-x-auto gap-4 px-4 md:px-8 lg:px-16">
+                {video?.results?.map((video) => (
+                  <div
+                    className="flex-shrink-0 w-[250px] md:w-[300px]"
+                    key={video.id}
+                    onClick={() => {
+                      setshowvideo(true);
+                      setvideoId(video.key);
+                    }}
+                  >
+                    <div className="relative">
+                      <img
+                        className="w-full rounded-xl opacity-50 hover:opacity-80"
+                        src={"https://img.youtube.com/vi/" + video.key + "/mqdefault.jpg"}
+                        alt={video.name}
+                      />
+                      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[60px] h-[60px] flex items-center justify-center">
+                        <img
+                          className="w-12 h-12"
+                          src="https://www.svgrepo.com/show/475861/play-button.svg"
+                          alt="Play"
+                        />
+                      </div>
+                    </div>
+                    <p className="text-gray-300 mt-2">{video.name}</p>
                   </div>
-                </div>
+                ))}
               </div>
-  
-              <div className="w-[1415px] bg-black  pl-14 text-white absolute">
+            </div>
+            <div className="py-6 md:py-12">
+              <div className="md:px-8 lg:px-16">
                 <MovieList
                   name={"Similar Shows"}
                   movies={movies?.similarmovies}
-                  type= {"tv"}
+                  type={"tv"}
                 />
                 <MovieList
-                  name={"Trending movies"}
+                  name={"Trending Movies"}
                   movies={movies?.trendingmovies}
                 />
-                <footer className="footer  bottom-0  text-white flex flex-col gap-8 py-10 justify-center items-center bg-black">
-                  <ul className="menuItems flex gap-7">
-                    <li className="menuItem">Terms Of Use</li>
-                    <li className="menuItem">Privacy-Policy</li>
-                    <li className="menuItem">About</li>
-                    <li className="menuItem">Blog</li>
-                    <li className="menuItem">FAQ</li>
-                  </ul>
-                  <div className="infoText max-w-[900px] text-gray-500 text-sm text-center">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
-                    do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                    Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                    laboris nisi ut aliquip ex ea commodo consequat. Duis aute
-                    irure dolor in reprehenderit in voluptate velit esse cillum
-                    dolore eu fugiat nulla pariatur.
-                  </div>
-                  <div className="socialIcons flex gap-5 text-xl">
-                    <span className="icon">
-                      <FaFacebookF />
-                    </span>
-                    <span className="icon">
-                      <FaInstagram />
-                    </span>
-                    <span className="icon">
-                      <FaTwitter />
-                    </span>
-                    <span className="icon">
-                      <FaLinkedin />
-                    </span>
-                  </div>
-                </footer>
+                <Footer />
               </div>
             </div>
-  
             {showvideo && (
-              <div className="fixed top-[25%] left-[20%] m-auto">
-                <RxCross2
-                  onClick={() => {
-                    setshowvideo(!showvideo);
-                  }}
-                  className="absolute  text-3xl text-white left-[870px] cursor-pointer"
-                />
-                <iframe
-                  className="absolute "
-                  width="820"
-                  height="455"
-                  src={
-                    "https://www.youtube.com/embed/" +
-                    videoId +
-                    "?si=4nOx2hdEtLq4l5jL"
-                  }
-                  title="YouTube video player"
-                  frameborder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  referrerpolicy="strict-origin-when-cross-origin"
-                  allowfullscreen
-                ></iframe>
+              <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80">
+                <div className="relative">
+                  <RxCross2
+                    onClick={() => setshowvideo(false)}
+                    className="absolute top-0 right-0 text-3xl cursor-pointer text-white"
+                  />
+                  <iframe
+                    className="w-full h-[315px] md:h-[500px]"
+                    src={"https://www.youtube.com/embed/" + videoId}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                </div>
               </div>
             )}
           </div>
         )}
       </div>
-    ); 
-}
+    );
+};
 
-export default TvShowDetails
+export default TvShowDetails;

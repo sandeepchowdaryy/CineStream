@@ -2,7 +2,7 @@ import React from 'react'
 
 const ShimmerPages = () => {
   return (
-    <div className="shimmer-container px-32 py-32 bg-black">
+    <div className="shimmer-container px-9 md:px-32  py-32 bg-black">
       <div className="flex gap-7 flex-wrap  overflow-hidden overflow-x-scroll no-scrollbar">
         {Array(20)
           .fill()
