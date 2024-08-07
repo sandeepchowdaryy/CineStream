@@ -20,8 +20,8 @@ const SearchMovieSuggestions = () => {
             {"Search Results of '" + searchtext + "'"}
           </h1>
         )}
-        <div className="flex  ">
-          <div className="flex flex-wrap gap-7 w-screen">
+        <div className="flex">
+          <div className="flex flex-wrap gap-7 mg:pl-0 pl-10 w-screen">
             {searchMovies?.map((movie) => (
               <Link to={"/movie/" + movie?.id} onClick={toogleSearchBtn}>
                 <MovieCard

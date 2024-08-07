@@ -19,9 +19,11 @@ const VideoTitle = ({ title, overview, id }) => {
   };
 
   return (
-    <div className="absolute w-full bg-gradient-to-r from-black md:px-16 md:py-[24%] px-10 py-[40%] text-white">
+    <div className="absolute w-full bg-gradient-to-r from-black md:px-16 md:py-[25%] px-4 py-[45%] text-white">
       <h1 className="text-3xl font-bold md:py-4 line-clamp-1">{title}</h1>
-      <p className="md:w-[900px] md:inline-block hidden  overflow-hidden text-ellipsis md:text-gray-400 text-gray-300  line-clamp-4">
+      <p
+        className="md:w-[700px] md:block hidden  overflow-hidden text-ellipsis md:text-gray-400 text-gray-300 max-h-[90px]"
+      >
         {overview}
       </p>
       <div className="pt-4 pb-6 flex gap-3">

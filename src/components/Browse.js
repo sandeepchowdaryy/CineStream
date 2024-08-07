@@ -20,7 +20,7 @@ function Browse() {
   useTrendingMovies();
   const movies = useSelector((store) => store.movies);
   
-  return movies?.length === 0 ?  <ShimmerBrowse/> : (
+  return movies === null ?  <ShimmerBrowse/> : (
     
     <div>
       

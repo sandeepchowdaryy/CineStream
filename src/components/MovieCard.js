@@ -7,7 +7,7 @@ const MovieCard = ({ posterPath, title, releaseDate,vote_average }) => {
       <div>
         {!posterPath ? (
           <img
-            className="rounded-lg h-[10.5rem] "
+            className="rounded-lg h-[10.5rem] md:h-[19rem] "
             src="https://th.bing.com/th/id/OIP.T1uutxkFTHvSswa1emt5HAAAAA?w=124&h=186&c=7&r=0&o=5&dpr=2&pid=1.7"
           />
         ) : (

@@ -10,15 +10,10 @@ const SecondaryContainer = () => {
   return (
     movies?.nowplayingmovies && (
       <div className=" text-white bg-black ">
-        <div className=" md:ml-10 ml-3 md:-mt-56  -mt-[4rem] relative z-20">
+        <div className=" md:ml-16 ml-3 md:-mt-56  -mt-[4rem] relative z-20">
           <MovieList
             name={"Now Playing"}
             movies={movies?.nowplayingmovies}
-            type={"movie"}
-          />
-          <MovieList
-            name={"TopRated Movies"}
-            movies={movies?.topmovies}
             type={"movie"}
           />
           <MovieList
@@ -26,6 +21,12 @@ const SecondaryContainer = () => {
             movies={movies?.trendingmovies}
             type={"movie"}
           />
+          <MovieList
+            name={"TopRated Movies"}
+            movies={movies?.topmovies}
+            type={"movie"}
+          />
+
           <MovieList
             name={"Popular"}
             movies={movies?.popularmovies}

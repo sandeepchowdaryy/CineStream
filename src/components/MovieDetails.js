@@ -189,7 +189,7 @@ export const MovieDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="movieCast relative md:top-[43rem] top-[85rem]">
+            <div className="movieCast relative md:top-[42rem] top-[85rem]">
             <div>
               <div className="">
                 <h1 className="text-white text-2xl font-semibold pl-8 md:pl-20">
@@ -227,7 +227,7 @@ export const MovieDetails = () => {
                 <h1 className="text-white text-2xl font-semibold pl-8">
                   Official Videos
                 </h1>
-                <div className=" md:w-[1455px]  px-8 py-8 flex gap-5 overflow-hidden overflow-x-scroll no-scrollbar">
+                <div className=" md:w-[1360px]  px-8 py-8 flex gap-5 overflow-hidden overflow-x-scroll no-scrollbar">
                   {video?.results?.map((video) => {
                     return (
                       <div
@@ -263,7 +263,7 @@ export const MovieDetails = () => {
                 </div>
               </div>
             </div>
-            <div className="w-full md:w-[1415px] bg-black pl-3  md:pl-14 text-white relative">
+            <div className="w-full md:w-[1415px] bg-black pl-7  md:pl-20 text-white relative">
               <MovieList
                 name={"Similar Movies"}
                 movies={movies?.similarmovies}

@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { addPopularMovies, addSimilarMovies } from "../utils/moviesSlice";
+import { addSimilatTvshows } from "../utils/moviesSlice";
 import { useEffect } from "react";
 import { API_Options } from "../utils/constants";
 
@@ -12,7 +12,7 @@ const useSimilarTvShows = (movieId) => {
       API_Options
     );
     const json = await data.json();
-    dispatch(addSimilarMovies(json.results));
+    dispatch(addSimilatTvshows(json.results));
   };
   
   useEffect(() => {

@@ -54,7 +54,7 @@ function Header() {
   return (
     <div
       id="header"
-      className={`fixed w-full h-24 z-50 flex flex-col pb-3  md:flex-row md:h-16 items-center justify-between transition-transform duration-1000 ease-in-out ${
+      className={`fixed md:w-[1414px] w-full h-24 z-50 flex flex-col pb-3  md:flex-row md:h-16 items-center justify-between transition-transform duration-1000 ease-in-out ${
         visible ? 'translate-y-0' : '-translate-y-full'
       }`}
       style={{
